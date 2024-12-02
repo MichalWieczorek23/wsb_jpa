@@ -1,22 +1,30 @@
 package com.jpacourse.persistence.entity;
 
 import com.jpacourse.persistence.enums.Specialization;
+import org.apache.tomcat.jni.Address;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "DOCTOR")
 public class DoctorEntity {
 
+	// Relacja jednostronna ze strony rodzica
+	@OneToMany(
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "DOCTOR_ID")
+	private Collection<VisitEntity> visitEntities;
+
+	// Relacja dwustronna
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private AddressEntity addressEntity;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "DOCTOR_ID")
 	private Long id;
 
 	@Column(nullable = false)
@@ -28,6 +36,7 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	private String telephoneNumber;
 
+	@Column(nullable = false)
 	private String email;
 
 	@Column(nullable = false)

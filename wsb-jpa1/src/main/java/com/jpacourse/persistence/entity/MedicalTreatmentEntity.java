@@ -17,12 +17,14 @@ public class MedicalTreatmentEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "MEDICAL_TREATMENT_ID")
 	private Long id;
 
 	@Column(nullable = false)
 	private String description;
 
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private TreatmentType type;
 
 	public Long getId() {

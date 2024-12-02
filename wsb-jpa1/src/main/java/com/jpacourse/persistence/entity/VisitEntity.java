@@ -1,22 +1,28 @@
 package com.jpacourse.persistence.entity;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "VISIT")
 public class VisitEntity {
 
+	// Relacja jednostronna ze strony rodzica
+	@OneToMany(
+			fetch = FetchType.LAZY,
+			orphanRemoval = true
+	)
+	@JoinColumn(name = "VISIT_ID")
+	private Collection<MedicalTreatmentEntity> medicalTreatmentEntities;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "VISIT_ID")
 	private Long id;
 
+	@Column(nullable = false)
 	private String description;
 
 	@Column(nullable = false)

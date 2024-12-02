@@ -1,20 +1,31 @@
 package com.jpacourse.persistence.entity;
 
-import java.time.LocalDate;
+import org.apache.tomcat.jni.Address;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.LocalDate;
+import java.util.Collection;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "PATIENT")
 public class PatientEntity {
 
+	// Relacja jednostronna ze strony rodzica
+	@OneToMany(
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "PATIENT_ID")
+	private Collection<VisitEntity> visitEntities;
+
+	// Relacja dwustronna
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private AddressEntity addressEntity;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "PATIENT_ID")
 	private Long id;
 
 	@Column(nullable = false)
