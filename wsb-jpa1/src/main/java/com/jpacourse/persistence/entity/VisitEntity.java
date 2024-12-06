@@ -9,6 +9,13 @@ import javax.persistence.*;
 @Table(name = "VISIT")
 public class VisitEntity {
 
+	// Relacja dwustronna
+	@ManyToOne(
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "DOCTOR_ID", nullable = true)
+	private DoctorEntity doctorEntity;
+
 	// Relacja jednostronna ze strony rodzica
 	@OneToMany(
 			fetch = FetchType.LAZY,

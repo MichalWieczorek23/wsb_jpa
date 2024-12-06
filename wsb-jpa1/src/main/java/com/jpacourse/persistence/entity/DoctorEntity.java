@@ -10,16 +10,16 @@ import java.util.Collection;
 @Table(name = "DOCTOR")
 public class DoctorEntity {
 
-	// Relacja jednostronna ze strony rodzica
-	@OneToMany(
-			fetch = FetchType.LAZY
-	)
+	// Relacja dwustronna
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = false)
 	@JoinColumn(name = "DOCTOR_ID")
 	private Collection<VisitEntity> visitEntities;
 
+
+	// unique -> by zagwarantować relację jeden-do-jeden każdy lekarz ma oddzielny adres
 	// Relacja dwustronna
-	@OneToOne
-	@JoinColumn(name = "address_id")
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+	@JoinColumn(name = "address_id", unique = true)
 	private AddressEntity addressEntity;
 
 	@Id
@@ -39,7 +39,7 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	private String email;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String doctorNumber;
 
 	@Column(nullable = false)

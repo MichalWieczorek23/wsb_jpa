@@ -19,8 +19,8 @@ public class PatientEntity {
 	private Collection<VisitEntity> visitEntities;
 
 	// Relacja dwustronna
-	@OneToOne
-	@JoinColumn(name = "address_id")
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinColumn(name = "address_id", unique = true)
 	private AddressEntity addressEntity;
 
 	@Id
