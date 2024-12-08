@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class PatientEntity {
 
 	// Relacja jednostronna ze strony rodzica
+	// Prywatność pacjenta jest chroniona
 	@OneToMany(
 			fetch = FetchType.LAZY
 	)
