@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class VisitEntity {
 
 	// Relacja dwustronna
-	// Doktor jest nullowalny żeby oddać pełną kontrolę nad zarządzaniem informacjiami o wizytach pacjentowi
+	// Doktor jest nullowalny żeby oddać pełną kontrolę pacjentowi do zarządzania swoimi danymi
 	// W ten sposób usunięcie danych lekarza nie wymusza usunięcia medycznych danych pajenta
 	@ManyToOne(
 			fetch = FetchType.LAZY
