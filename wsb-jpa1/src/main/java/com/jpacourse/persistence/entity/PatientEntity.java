@@ -47,6 +47,7 @@ public class PatientEntity {
 	private LocalDate dateOfBirth;
 
 	// Dodatkowe pole wymagane w p.1 Lab2
+	@Column(nullable = true)
 	private double BMI;
 
 	public Long getId() {
