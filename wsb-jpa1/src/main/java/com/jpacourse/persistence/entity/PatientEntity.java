@@ -14,7 +14,8 @@ public class PatientEntity {
 	// Relacja jednostronna ze strony rodzica
 	// Prywatność pacjenta jest chroniona
 	@OneToMany(
-			fetch = FetchType.LAZY
+			fetch = FetchType.LAZY,
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}
 	)
 	@JoinColumn(name = "PATIENT_ID")
 	private Collection<VisitEntity> visitEntities;

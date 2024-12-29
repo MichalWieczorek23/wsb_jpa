@@ -17,10 +17,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -54,18 +56,39 @@ public class PatientServiceTest
 
     @Transactional
     @Test
-    public void testShouldDeletePatient(){
+    public void testShouldDeletePatient() {
         // given
-        PatientEntity patientEntity = entityManager.createQuery("SELECT  p FROM PatientEntity p", PatientEntity.class).getResultList().get(0);
+        List<DoctorEntity> doctorEntityTempList = entityManager.createQuery("SELECT d FROM DoctorEntity d", DoctorEntity.class).getResultList();
+        List<PatientEntity> patientEntities = entityManager.createQuery("SELECT p FROM PatientEntity p", PatientEntity.class).getResultList();
+
+        PatientTO patientTO = patientService.findById(1L);
+        assertNotNull(patientTO);
+
+        PatientEntity patientEntity = entityManager.createQuery("SELECT p FROM PatientEntity p", PatientEntity.class).getResultList().get(0);
         List<VisitEntity> visitEntityList = new ArrayList<>(patientEntity.getVisitEntities());
-        List<DoctorEntity> doctorEntityTempList = entityManager.createQuery("SELECT  d FROM DoctorEntity d", DoctorEntity.class).getResultList();
+
+        System.out.println(patientService.findById(1L).getId());
 
         // when
         patientService.deletePatient(1L);
 
-        //then
+        // then
         assertNull(patientService.findById(1L));
 
 
+        List<PatientEntity> patientEntitiesAfter = entityManager.createQuery("SELECT p FROM PatientEntity p", PatientEntity.class).getResultList();
+        List<DoctorEntity> doctorEntityTempListAfter = entityManager.createQuery("SELECT d FROM DoctorEntity d", DoctorEntity.class).getResultList();
+        List<VisitEntity> allVisitEntityListAfter = entityManager.createQuery("SELECT v FROM VisitEntity v", VisitEntity.class).getResultList();
+
+        assertEquals( "The number of patients should decrease by exactly by 1 after removing patient", patientEntities.size(), patientEntitiesAfter.size()+1);
+
+        assertEquals( "The number of doctors should remain the same", doctorEntityTempList.size(), doctorEntityTempListAfter.size());
+        for (DoctorEntity doctor : doctorEntityTempList) {
+            assertTrue("DoctorEntity should still exist: " + doctor.getId(), doctorEntityTempListAfter.contains(doctor));
+        }
+
+        for (VisitEntity visit : visitEntityList) {
+            assertFalse("VisitEntity related to deleted patient should be removed: " + visit.getId(), allVisitEntityListAfter.contains(visit));
+        }
     }
 }

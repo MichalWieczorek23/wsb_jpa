@@ -21,6 +21,9 @@ insert into doctor (doctor_id, doctor_number, email, first_name, last_name, spec
 
 insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
             values (1, '2001-01-01', 'MikeScott@gmail.com', 'Mike', 'Scott', '1', '+48259684713', 4, 21);
+
+insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
+            values (2, '2003-01-01', 'AdamJohn@gmail.com', 'Adam', 'Smith', '2', '+48462622743', 5, 23);
 --insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id)
 --            values (2, '2011-01-01', 'MikeBudd@gmail.com', 'Mike', 'Buddweiser', '2', '+48596582321', 5);
 --insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id)
@@ -35,6 +38,9 @@ insert into patient (patient_id, date_of_birth, email, first_name, last_name, pa
 
 insert into visit (visit_id, description, time, patient_id, doctor_id)
             values (1, 'Kontrolna wizyta', '2023-12-30 18:30:00', 1, 1);
+
+insert into visit (visit_id, description, time, patient_id, doctor_id)
+            values (2, 'Kontrolna wizyta v2', '2023-12-30 18:30:00', 2, 1);
 --insert into visit (visit_id, description, time, patient_id, doctor_id)
 --            values (2, 'Kontrolna wizyta', '2021-12-13 19:43:00', 2, 2);
 --insert into visit (visit_id, description, time, patient_id, doctor_id)
