@@ -3,6 +3,7 @@ package com.jpacourse.persistence.entity;
 import org.apache.tomcat.jni.Address;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Collection;
 
 import javax.persistence.*;
@@ -100,7 +101,7 @@ public class PatientEntity {
 	}
 
 	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
+		return null;
 	}
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
@@ -121,5 +122,9 @@ public class PatientEntity {
 
 	public void setBMI(double BMI) {
 		this.BMI = BMI;
+	}
+
+	public void setAddress(AddressEntity addressEntity) {
+		this.addressEntity = addressEntity;
 	}
 }

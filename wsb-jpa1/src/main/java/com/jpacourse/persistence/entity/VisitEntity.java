@@ -76,4 +76,5 @@ public class VisitEntity {
 	public void setMedicalTreatmentEntities(Collection<MedicalTreatmentEntity> medicalTreatmentEntities) {
 		this.medicalTreatmentEntities = medicalTreatmentEntities;
 	}
+
 }
