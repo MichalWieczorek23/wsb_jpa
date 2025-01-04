@@ -31,6 +31,7 @@ public class PatientDaoTest {
     @Autowired
     private DoctorDao doctorDao;
 
+    @Transactional
     @Test
     public void testAddVisitToPatient() {
         // given
