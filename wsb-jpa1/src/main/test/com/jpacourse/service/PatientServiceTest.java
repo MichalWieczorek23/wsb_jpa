@@ -2,7 +2,10 @@ package com.jpacourse.service;
 
 import com.jpacourse.dto.PatientTO;
 import com.jpacourse.dto.VisitBasicsDto;
+import com.jpacourse.persistence.dao.AddressDao;
+import com.jpacourse.persistence.dao.DoctorDao;
 import com.jpacourse.persistence.dao.PatientDao;
+import com.jpacourse.persistence.dao.VisitDao;
 import com.jpacourse.persistence.entity.DoctorEntity;
 import com.jpacourse.persistence.entity.MedicalTreatmentEntity;
 import com.jpacourse.persistence.entity.PatientEntity;
@@ -32,7 +35,16 @@ public class PatientServiceTest
     private PatientService patientService;
 
     @Autowired
-    private EntityManager entityManager;
+    private PatientDao patientDao;
+
+    @Autowired
+    private AddressDao addressDao;
+
+    @Autowired
+    private DoctorDao doctorDao;
+
+    @Autowired
+    private VisitDao visitDao;
 
     @Transactional
     @Test
@@ -58,13 +70,14 @@ public class PatientServiceTest
     @Test
     public void testShouldDeletePatient() {
         // given
-        List<DoctorEntity> doctorEntityTempList = entityManager.createQuery("SELECT d FROM DoctorEntity d", DoctorEntity.class).getResultList();
-        List<PatientEntity> patientEntities = entityManager.createQuery("SELECT p FROM PatientEntity p", PatientEntity.class).getResultList();
+        List<DoctorEntity> doctorEntityTempList = doctorDao.findAll();
+        List<PatientEntity> patientEntities = patientDao.findAll();
 
         PatientTO patientTO = patientService.findById(1L);
         assertNotNull(patientTO);
 
-        PatientEntity patientEntity = entityManager.createQuery("SELECT p FROM PatientEntity p", PatientEntity.class).getResultList().get(0);
+        PatientEntity patientEntity = patientDao.findOne(1L);
+
         List<VisitEntity> visitEntityList = new ArrayList<>(patientEntity.getVisitEntities());
 
         System.out.println(patientService.findById(1L).getId());
@@ -75,10 +88,9 @@ public class PatientServiceTest
         // then
         assertNull(patientService.findById(1L));
 
-
-        List<PatientEntity> patientEntitiesAfter = entityManager.createQuery("SELECT p FROM PatientEntity p", PatientEntity.class).getResultList();
-        List<DoctorEntity> doctorEntityTempListAfter = entityManager.createQuery("SELECT d FROM DoctorEntity d", DoctorEntity.class).getResultList();
-        List<VisitEntity> allVisitEntityListAfter = entityManager.createQuery("SELECT v FROM VisitEntity v", VisitEntity.class).getResultList();
+        List<PatientEntity> patientEntitiesAfter = patientDao.findAll();
+        List<DoctorEntity> doctorEntityTempListAfter = doctorDao.findAll();
+        List<VisitEntity> allVisitEntityListAfter = visitDao.findAll();
 
         assertEquals( "The number of patients should decrease by exactly by 1 after removing patient", patientEntities.size(), patientEntitiesAfter.size()+1);
 
