@@ -26,7 +26,10 @@ public class PatientDaoTest {
     private PatientDao patientDao;
 
     @Autowired
-    private EntityManager entityManager;
+    private AddressDao addressDao;
+
+    @Autowired
+    private DoctorDao doctorDao;
 
     @Test
     public void testAddVisitToPatient() {
@@ -39,7 +42,7 @@ public class PatientDaoTest {
         doctor.setTelephoneNumber("+485634230423");
         doctor.setSpecialization(Specialization.SURGEON);
 
-        entityManager.persist(doctor);
+        doctorDao.save(doctor);
 
         System.out.println("Created doctor: "+doctor.getId().toString());
 
@@ -49,7 +52,7 @@ public class PatientDaoTest {
         addressEntity.setCity("City1");
         addressEntity.setPostalCode("66-666");
 
-        entityManager.persist(addressEntity);
+        addressDao.save(addressEntity);
 
         PatientEntity patient = new PatientEntity();
         patient.setFirstName("Jan");
@@ -61,7 +64,7 @@ public class PatientDaoTest {
         patient.setAddress(addressEntity);
         patient.setPatientNumber("P-1001");
 
-        entityManager.persist(patient);
+        patientDao.save(patient);
 
         Long patientId = patient.getId();
         Long doctorId = doctor.getId();
@@ -72,7 +75,8 @@ public class PatientDaoTest {
         patientDao.addVisitToPatient(patientId, doctorId, visitDate, visitDescription);
 
         // Then
-        PatientEntity updatedPatient = entityManager.find(PatientEntity.class, patientId);
+
+        PatientEntity updatedPatient = patientDao.findOne(patientId);
         assertThat(updatedPatient).isNotNull();
         assertThat(updatedPatient.getVisitEntities()).hasSize(1);
 
