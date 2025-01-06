@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
@@ -48,5 +49,28 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
         patient.setVisitEntities(visitEntities);
 
         entityManager.merge(patient);
+    }
+
+    @Override
+    public List<PatientEntity> findPatientsByLastName(String lastName){
+        return entityManager.createQuery("select pat from PatientEntity pat " +
+                "where pat.lastName = :lname ", PatientEntity.class)
+                .setParameter("lname", lastName)
+                .getResultList();
+    }
+
+    @Override
+    public List<VisitEntity> findAllVisitsByPatientID(Long patientID){
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<PatientEntity> findPatientsWithMoreVisitsThan(int numberOfVisits){
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<PatientEntity> findPatientsByBMI(double BMI){
+        return new ArrayList<>();
     }
 }
