@@ -84,7 +84,10 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
     }
 
     @Override
-    public List<PatientEntity> findPatientsByBMI(double BMI){
-        return new ArrayList<>();
+    public List<PatientEntity> findPatientsWithBMILowerThan(double BMI){
+        return entityManager.createQuery("select pat from PatientEntity pat " +
+                "where pat.BMI < :num ", PatientEntity.class)
+                .setParameter("num", BMI)
+                .getResultList();
     }
 }

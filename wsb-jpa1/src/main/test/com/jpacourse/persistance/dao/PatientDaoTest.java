@@ -5,19 +5,16 @@ import com.jpacourse.persistence.entity.DoctorEntity;
 import com.jpacourse.persistence.entity.PatientEntity;
 import com.jpacourse.persistence.entity.VisitEntity;
 import com.jpacourse.persistence.enums.Specialization;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -119,7 +116,6 @@ public class PatientDaoTest {
 
         //when
         List<PatientEntity> patientEntityList = patientDao.findPatientsByLastName("Scott");
-//        System.out.println(patientEntityList.toString());
 
         //then
         assertThat(patientEntityList.size()).isEqualTo(2);
@@ -155,9 +151,19 @@ public class PatientDaoTest {
     @Test
     public void testFindPatientsWithMoreVisitsThan() {
         List<PatientEntity> patientEntityList = patientDao.findPatientsWithMoreVisitsThan(1);
-//        System.out.println(patientEntityList.toString());
 
         assertThat(patientEntityList.size()).isEqualTo(1);
         assertThat(patientEntityList.get(0).getId()).isEqualTo(2);
+    }
+
+    @Transactional
+    @Test
+    public void testFindPatientsWithBMILowerThan() {
+        List<PatientEntity> patientEntityList = patientDao.findPatientsWithBMILowerThan(25.0);
+        System.out.println(patientEntityList);
+
+        for (PatientEntity patient : patientEntityList) {
+            assertThat(patient.getBMI()).isLessThan(25.0);
+        }
     }
 }
