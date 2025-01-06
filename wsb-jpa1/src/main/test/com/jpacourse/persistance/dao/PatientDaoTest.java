@@ -154,6 +154,9 @@ public class PatientDaoTest {
 
         assertThat(patientEntityList.size()).isEqualTo(1);
         assertThat(patientEntityList.get(0).getId()).isEqualTo(2);
+        for (PatientEntity patient : patientEntityList) {
+            assertThat(patient.getVisitEntities().size()).isGreaterThan(1);
+        }
     }
 
     @Transactional
