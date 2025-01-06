@@ -75,7 +75,12 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
 
     @Override
     public List<PatientEntity> findPatientsWithMoreVisitsThan(int numberOfVisits){
-        return new ArrayList<>();
+        return entityManager.createQuery("select pat from PatientEntity pat " +
+                "join pat.visitEntities visits " +
+                "group by pat " +
+                "having count (visits) > :num ", PatientEntity.class)
+                .setParameter("num", Long.valueOf(numberOfVisits))
+                .getResultList();
     }
 
     @Override

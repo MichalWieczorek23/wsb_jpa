@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -148,5 +149,15 @@ public class PatientDaoTest {
             returnedVisitsIdx.remove(loopVisitIdx);
         }
         assertThat(returnedVisitsIdx.size()).isEqualTo(0);
+    }
+
+    @Transactional
+    @Test
+    public void testFindPatientsWithMoreVisitsThan() {
+        List<PatientEntity> patientEntityList = patientDao.findPatientsWithMoreVisitsThan(1);
+//        System.out.println(patientEntityList.toString());
+
+        assertThat(patientEntityList.size()).isEqualTo(1);
+        assertThat(patientEntityList.get(0).getId()).isEqualTo(2);
     }
 }

@@ -41,8 +41,9 @@ insert into visit (visit_id, description, time, patient_id, doctor_id)
 
 insert into visit (visit_id, description, time, patient_id, doctor_id)
             values (2, 'Kontrolna wizyta v2', '2023-12-30 18:30:00', 2, 1);
---insert into visit (visit_id, description, time, patient_id, doctor_id)
---            values (2, 'Kontrolna wizyta', '2021-12-13 19:43:00', 2, 2);
+insert into visit (visit_id, description, time, patient_id, doctor_id)
+            values (3, 'Kontrolna wizyta', '2021-12-13 19:43:00', 2, 2);
+
 --insert into visit (visit_id, description, time, patient_id, doctor_id)
 --            values (3, 'Kontrolna wizyta', '2021-12-03 18:52:00', 3, 3);
 
