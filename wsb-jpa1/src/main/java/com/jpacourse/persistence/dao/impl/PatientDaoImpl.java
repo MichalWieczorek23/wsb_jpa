@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -59,9 +62,15 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
                 .getResultList();
     }
 
+    // TODO: Poprawic typ
     @Override
     public List<VisitEntity> findAllVisitsByPatientID(Long patientID){
-        return new ArrayList<>();
+        List<VisitEntity> resultList = entityManager.createQuery("select pat.visitEntities from PatientEntity pat " +
+        "where pat.id = :pid ", VisitEntity.class)
+        .setParameter("pid", patientID)
+        .getResultList();
+
+        return resultList;
     }
 
     @Override

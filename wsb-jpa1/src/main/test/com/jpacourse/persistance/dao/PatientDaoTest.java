@@ -5,6 +5,7 @@ import com.jpacourse.persistence.entity.DoctorEntity;
 import com.jpacourse.persistence.entity.PatientEntity;
 import com.jpacourse.persistence.entity.VisitEntity;
 import com.jpacourse.persistence.enums.Specialization;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -117,12 +118,35 @@ public class PatientDaoTest {
 
         //when
         List<PatientEntity> patientEntityList = patientDao.findPatientsByLastName("Scott");
-        System.out.println(patientEntityList.toString());
+//        System.out.println(patientEntityList.toString());
 
         //then
         assertThat(patientEntityList.size()).isEqualTo(2);
         for (PatientEntity loopPatient : patientEntityList) {
             assertThat(loopPatient.getLastName()).isEqualTo("Scott");
         }
+    }
+
+    @Transactional
+    @Test
+    public void testFindAllVisitsByPatientID() {
+        PatientEntity patientEntity = patientDao.findOne(1L);
+        List<Long> actualVisitsIdx = new ArrayList<>();
+        List<Long> returnedVisitsIdx = new ArrayList<>();
+        for (VisitEntity loopVisit : patientEntity.getVisitEntities()) {
+            actualVisitsIdx.add(loopVisit.getId());
+        }
+
+        List<VisitEntity> visitEntityList = patientDao.findAllVisitsByPatientID(1L);
+//        System.out.println(visitEntityList.toString());
+
+        for (VisitEntity loopVisit : visitEntityList) {
+            returnedVisitsIdx.add(loopVisit.getId());
+        }
+        assertThat(returnedVisitsIdx.size()).isEqualTo(actualVisitsIdx.size());
+        for (Long loopVisitIdx : actualVisitsIdx) {
+            returnedVisitsIdx.remove(loopVisitIdx);
+        }
+        assertThat(returnedVisitsIdx.size()).isEqualTo(0);
     }
 }
