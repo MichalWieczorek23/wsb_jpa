@@ -62,15 +62,12 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
                 .getResultList();
     }
 
-    // TODO: Poprawic typ
     @Override
     public List<VisitEntity> findAllVisitsByPatientID(Long patientID){
-        List<VisitEntity> resultList = entityManager.createQuery("select pat.visitEntities from PatientEntity pat " +
-        "where pat.id = :pid ", VisitEntity.class)
+        return entityManager.createQuery("select visit from PatientEntity pat " +
+        "join pat.visitEntities visit where pat.id = :pid ", VisitEntity.class)
         .setParameter("pid", patientID)
         .getResultList();
-
-        return resultList;
     }
 
     @Override
