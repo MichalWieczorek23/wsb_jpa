@@ -9,6 +9,7 @@ import java.util.List;
 // ! Czy klasa musi byc Serializable
 public class VisitBasicsDto implements Serializable
 {
+    private Long id;
     private LocalDateTime time;
     private String doctorFirstName;
     private String doctorLastName;
@@ -16,6 +17,14 @@ public class VisitBasicsDto implements Serializable
 
     public LocalDateTime getTime() {
         return time;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setTime(LocalDateTime time) {

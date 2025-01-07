@@ -23,6 +23,7 @@ public final class PatientMapper
 
         for (VisitEntity el : tempVisits) {
             VisitBasicsDto tempVisitBasicsDto = new VisitBasicsDto();
+            tempVisitBasicsDto.setId(el.getId());
             tempVisitBasicsDto.setTime(el.getTime());
             tempVisitBasicsDto.setDoctorFirstName(el.getDoctorEntity().getFirstName());
             tempVisitBasicsDto.setDoctorLastName(el.getDoctorEntity().getLastName());

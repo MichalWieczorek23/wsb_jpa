@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 
@@ -64,6 +65,29 @@ public class PatientServiceTest
         }
 
         assertEquals(21.0, patientTO.getBMI(), 0.1);
+    }
+
+    @Transactional
+    @Test
+    public void testFindAllVisitsByPatientID() {
+        PatientTO patientTO = patientService.findById(1L);
+        List<Long> actualVisitsIdx = new ArrayList<>();
+        List<Long> returnedVisitsIdx = new ArrayList<>();
+        for (VisitBasicsDto loopVisit : patientTO.getVisitBasicsDtos()) {
+            actualVisitsIdx.add(loopVisit.getId());
+        }
+
+        List<VisitEntity> visitEntityList = patientDao.findAllVisitsByPatientID(1L);
+//        System.out.println(visitEntityList.toString());
+
+        for (VisitEntity loopVisit : visitEntityList) {
+            returnedVisitsIdx.add(loopVisit.getId());
+        }
+        assertThat(returnedVisitsIdx.size()).isEqualTo(actualVisitsIdx.size());
+        for (Long loopVisitIdx : actualVisitsIdx) {
+            returnedVisitsIdx.remove(loopVisitIdx);
+        }
+        assertThat(returnedVisitsIdx.size()).isEqualTo(0);
     }
 
     @Transactional
