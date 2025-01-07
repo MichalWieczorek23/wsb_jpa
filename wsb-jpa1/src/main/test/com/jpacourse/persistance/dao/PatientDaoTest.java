@@ -124,8 +124,6 @@ public class PatientDaoTest {
         }
     }
 
-
-
     @Transactional
     @Test
     public void testFindPatientsWithMoreVisitsThan() {
@@ -135,6 +133,17 @@ public class PatientDaoTest {
         assertThat(patientEntityList.get(0).getId()).isEqualTo(2);
         for (PatientEntity patient : patientEntityList) {
             assertThat(patient.getVisitEntities().size()).isGreaterThan(1);
+        }
+    }
+
+    @Transactional
+    @Test
+    public void testFindPatientsWithRegistrationAfterDate() {
+        List<PatientEntity> patientEntityList = patientDao.findPatientsRegisteredAtClinicAfterDate(LocalDate.of(2021, 6, 20));
+
+        assertThat(patientEntityList.size()).isEqualTo(1);
+        for (PatientEntity patient : patientEntityList) {
+            assertThat(patient.getDateOfRegistrationAtClinic()).isAfter(LocalDate.of(2021, 6, 20));
         }
     }
 

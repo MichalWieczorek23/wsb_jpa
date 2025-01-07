@@ -48,6 +48,9 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
+	@Column(nullable = true)
+	private LocalDate dateOfRegistrationAtClinic;
+
 	// Dodatkowe pole wymagane w p.1 Lab2
 	@Column(nullable = true)
 	private double BMI;
@@ -101,11 +104,19 @@ public class PatientEntity {
 	}
 
 	public LocalDate getDateOfBirth() {
-		return null;
+		return this.dateOfBirth;
 	}
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public LocalDate getDateOfRegistrationAtClinic() {
+		return this.dateOfRegistrationAtClinic;
+	}
+
+	public void setDateOfRegistrationAtClinic(LocalDate dateOfRegistrationAtClinic) {
+		this.dateOfRegistrationAtClinic = dateOfRegistrationAtClinic;
 	}
 
 	public Collection<VisitEntity> getVisitEntities() {

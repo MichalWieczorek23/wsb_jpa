@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,6 +53,17 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
         patient.setVisitEntities(visitEntities);
 
         entityManager.merge(patient);
+    }
+
+    @Override
+    public List<PatientEntity> findPatientsRegisteredAtClinicAfterDate(LocalDate dateOfRegistrationAtClinic) {
+        return entityManager.createQuery(
+                        "select pat from PatientEntity pat " +
+                                "where pat.dateOfRegistrationAtClinic > :registeredAfterDate " +
+                                "order by pat.dateOfRegistrationAtClinic ASC",
+                        PatientEntity.class)
+                .setParameter("registeredAfterDate", dateOfRegistrationAtClinic)
+                .getResultList();
     }
 
     @Override
