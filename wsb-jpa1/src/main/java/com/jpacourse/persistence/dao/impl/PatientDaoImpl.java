@@ -20,9 +20,6 @@ import java.util.List;
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     @Transactional
     public void addVisitToPatient(Long patientId, Long doctorId, LocalDateTime visitDate, String visitDescription) {
