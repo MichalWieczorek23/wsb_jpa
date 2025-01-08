@@ -109,10 +109,10 @@ public class PatientDaoTest {
     @Transactional
     @Test
     public void testFindPatientsWithMoreVisitsThan() {
-        List<PatientEntity> patientEntityList = patientDao.findPatientsWithMoreVisitsThan(1);
+        List<PatientEntity> patientEntityList = patientDao.findPatientsWithMoreVisitsThan(2);
 
         assertThat(patientEntityList.size()).isEqualTo(1);
-        assertThat(patientEntityList.get(0).getId()).isEqualTo(2);
+        assertThat(patientEntityList.get(0).getId()).isEqualTo(1L);
         for (PatientEntity patient : patientEntityList) {
             assertThat(patient.getVisitEntities().size()).isGreaterThan(1);
         }

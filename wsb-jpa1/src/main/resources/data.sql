@@ -44,15 +44,19 @@ insert into patient (patient_id, date_of_birth, email, first_name, last_name, pa
 
 
 insert into visit (visit_id, description, time, patient_id, doctor_id)
-            values (1, 'Kontrolna wizyta', '2023-12-30 18:30:00', 1, 1);
+            values (1, 'Kontrolna wizyta 1', '2023-12-30 18:30:00', 1, 1);
 
 insert into visit (visit_id, description, time, patient_id, doctor_id)
             values (2, 'Kontrolna wizyta v2', '2023-12-30 18:30:00', 2, 1);
 insert into visit (visit_id, description, time, patient_id, doctor_id)
             values (3, 'Kontrolna wizyta', '2021-12-13 19:43:00', 2, 2);
 
---insert into visit (visit_id, description, time, patient_id, doctor_id)
---            values (3, 'Kontrolna wizyta', '2021-12-03 18:52:00', 3, 3);
+insert into visit (visit_id, description, time, patient_id, doctor_id)
+            values (4, 'Kontrolna wizyta 2', '2023-12-30 18:30:00', 1, 2);
+
+insert into visit (visit_id, description, time, patient_id, doctor_id)
+            values (5, 'Kontrolna wizyta 3', '2023-12-30 18:30:00', 1, 1);
+
 
 insert into medical_treatment (medical_treatment_id, description, type, visit_id)
             values (1, 'Badanie ciśnienia krwi', 'USG',  1);

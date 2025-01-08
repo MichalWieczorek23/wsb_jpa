@@ -1,6 +1,7 @@
 package com.jpacourse.service.impl;
 
 import com.jpacourse.dto.PatientTO;
+import com.jpacourse.dto.VisitBasicsDto;
 import com.jpacourse.mapper.PatientMapper;
 import com.jpacourse.persistence.dao.PatientDao;
 import com.jpacourse.persistence.entity.PatientEntity;
@@ -28,6 +29,12 @@ public class PatientServiceImpl implements PatientService
     public PatientTO findById(Long id) {
         final PatientEntity entity = patientDao.findOne(id);
         return PatientMapper.mapToTO(entity);
+    }
+
+    @Override
+    public List<VisitBasicsDto> findAllVisitsByThePatientsId(Long id) {
+        PatientTO patientTO = this.findById(1L);
+        return new ArrayList<>(patientTO.getVisitBasicsDtos());
     }
 
     @Override

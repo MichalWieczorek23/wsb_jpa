@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +51,7 @@ public class PatientServiceTest
     @Transactional
     @Test
     public void testShouldFindPatientById(){
+        // Data was previously prepared in the SQL
         PatientTO patientTO = patientService.findById(1L);
 
         assertNotNull(patientTO);
@@ -70,24 +72,15 @@ public class PatientServiceTest
     @Transactional
     @Test
     public void testFindAllVisitsByPatientID() {
-        PatientTO patientTO = patientService.findById(1L);
-        List<Long> actualVisitsIdx = new ArrayList<>();
-        List<Long> returnedVisitsIdx = new ArrayList<>();
-        for (VisitBasicsDto loopVisit : patientTO.getVisitBasicsDtos()) {
-            actualVisitsIdx.add(loopVisit.getId());
-        }
+        // Data was previously prepared in the SQL
+        List<VisitBasicsDto> patientVisits = patientService.findAllVisitsByThePatientsId(1L);
 
-        List<VisitEntity> visitEntityList = patientDao.findAllVisitsByPatientID(1L);
-//        System.out.println(visitEntityList.toString());
+        List<Long> expectedVisitsIds = Arrays.asList(1L, 4L, 5L);
 
-        for (VisitEntity loopVisit : visitEntityList) {
-            returnedVisitsIdx.add(loopVisit.getId());
+        for (VisitBasicsDto loopVisit : patientVisits) {
+            assertThat(loopVisit.getId()).isIn(expectedVisitsIds);
         }
-        assertThat(returnedVisitsIdx.size()).isEqualTo(actualVisitsIdx.size());
-        for (Long loopVisitIdx : actualVisitsIdx) {
-            returnedVisitsIdx.remove(loopVisitIdx);
-        }
-        assertThat(returnedVisitsIdx.size()).isEqualTo(0);
+        assertThat(patientVisits.size()).isEqualTo(3);
     }
 
     @Transactional
