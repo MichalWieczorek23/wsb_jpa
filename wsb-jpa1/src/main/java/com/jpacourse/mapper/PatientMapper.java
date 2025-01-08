@@ -19,18 +19,10 @@ public final class PatientMapper
         }
         final PatientTO patientTO = new PatientTO();
         List<VisitBasicsDto> tempVisitBasicsDtoList = new ArrayList<>();
+
         List<VisitEntity> tempVisits = new ArrayList<>(patientEntity.getVisitEntities());
-
         for (VisitEntity el : tempVisits) {
-            VisitBasicsDto tempVisitBasicsDto = new VisitBasicsDto();
-            tempVisitBasicsDto.setId(el.getId());
-            tempVisitBasicsDto.setTime(el.getTime());
-            tempVisitBasicsDto.setDoctorFirstName(el.getDoctorEntity().getFirstName());
-            tempVisitBasicsDto.setDoctorLastName(el.getDoctorEntity().getLastName());
-            List <MedicalTreatmentEntity> tempMedicalTList = new ArrayList<>(el.getMedicalTreatmentEntities());
-            tempVisitBasicsDto.setMedicalTreatmentEntities(tempMedicalTList);
-
-            tempVisitBasicsDtoList.add(tempVisitBasicsDto);
+            tempVisitBasicsDtoList.add(VisitMapper.mapToTO(el));
         }
 
         patientTO.setId(patientEntity.getId());
