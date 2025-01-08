@@ -53,13 +53,12 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
     }
 
     @Override
-    public List<PatientEntity> findPatientsRegisteredAtClinicAfterDate(LocalDate dateOfRegistrationAtClinic) {
+    public List<PatientEntity> findPatientsWithBmiGraterThen(double BMI) {
         return entityManager.createQuery(
                         "select pat from PatientEntity pat " +
-                                "where pat.dateOfRegistrationAtClinic > :registeredAfterDate " +
-                                "order by pat.dateOfRegistrationAtClinic ASC",
+                                "where pat.BMI > :bmiLimit ",
                         PatientEntity.class)
-                .setParameter("registeredAfterDate", dateOfRegistrationAtClinic)
+                .setParameter("bmiLimit", BMI)
                 .getResultList();
     }
 

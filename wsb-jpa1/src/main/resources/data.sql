@@ -11,6 +11,8 @@ insert into address (address_id, address_line1, address_line2, city, postal_code
             values (5, 'zz', 'yy', 'town', '51-303');
 insert into address (address_id, address_line1, address_line2, city, postal_code)
             values (6, 'zzz', 'yyy', 'town', '52-303');
+insert into address (address_id, address_line1, address_line2, city, postal_code)
+            values (7, 'xxxx', 'xxxxx', 'City1', '66-666');
 
 insert into doctor (doctor_id, doctor_number, email, first_name, last_name, specialization, telephone_number, address_id)
             values (1, '1', 'FrankSinatra@gmail.com', 'Frank', 'Sinatra', 'SURGEON', '+48693636258', 1);
@@ -19,11 +21,16 @@ insert into doctor (doctor_id, doctor_number, email, first_name, last_name, spec
 insert into doctor (doctor_id, doctor_number, email, first_name, last_name, specialization, telephone_number, address_id)
             values (3, '3', 'MonicaBelluci@gmail.com', 'Monica', 'Belluci', 'OCULIST', '+48256938741', 3);
 
-insert into patient (patient_id, date_of_birth, date_of_registration_at_clinic, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
-            values (1, '2001-01-01', '2019-01-01', 'MikeScott@gmail.com', 'Mike', 'Scott', '1', '+48259684713', 4, 21);
+insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
+            values (1, '2001-01-01', 'MikeScott@gmail.com', 'Mike', 'Scott', '1', '+48259684713', 4, 21);
 
-insert into patient (patient_id, date_of_birth, date_of_registration_at_clinic, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
-            values (2, '2003-01-01', '2023-01-01', 'AdamJohn@gmail.com', 'Adam', 'Smith', '2', '+48462622743', 5, 23);
+insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
+            values (2, '2003-01-01', 'AdamJohn@gmail.com', 'Adam', 'Smith', '2', '+48462622743', 5, 23);
+
+insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id, bmi)
+            values (3, '1995-01-01', 'jan.scott@gmail.com', 'Jan', 'Scott', '3', '+48762334100', 7, 31);
+
+
 --insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id)
 --            values (2, '2011-01-01', 'MikeBudd@gmail.com', 'Mike', 'Buddweiser', '2', '+48596582321', 5);
 --insert into patient (patient_id, date_of_birth, email, first_name, last_name, patient_number, telephone_number, address_id)

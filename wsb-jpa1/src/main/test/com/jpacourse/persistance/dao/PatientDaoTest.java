@@ -94,25 +94,7 @@ public class PatientDaoTest {
     @Test
     public void testFindPatientsByLastName() {
         //given
-        AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setAddressLine1("line1");
-        addressEntity.setAddressLine2("line2");
-        addressEntity.setCity("City1");
-        addressEntity.setPostalCode("66-666");
-
-        addressDao.save(addressEntity);
-
-        PatientEntity patient = new PatientEntity();
-        patient.setFirstName("Jan");
-        patient.setLastName("Scott");
-        patient.setDateOfBirth(LocalDate.parse("1995-01-01"));
-        patient.setBMI(31);
-        patient.setEmail("jan.scott@gmail.com");
-        patient.setTelephoneNumber("+48762334100");
-        patient.setAddress(addressEntity);
-        patient.setPatientNumber("P-1001");
-
-        patientDao.save(patient);
+        // 2 Scotts defined in SQL file
 
         //when
         List<PatientEntity> patientEntityList = patientDao.findPatientsByLastName("Scott");
@@ -138,12 +120,12 @@ public class PatientDaoTest {
 
     @Transactional
     @Test
-    public void testFindPatientsWithRegistrationAfterDate() {
-        List<PatientEntity> patientEntityList = patientDao.findPatientsRegisteredAtClinicAfterDate(LocalDate.of(2021, 6, 20));
+    public void testFindPatientsWithBmiAbove() {
+        List<PatientEntity> patientEntityList = patientDao.findPatientsWithBmiGraterThen(21);
 
-        assertThat(patientEntityList.size()).isEqualTo(1);
+        assertThat(patientEntityList.size()).isEqualTo(2);
         for (PatientEntity patient : patientEntityList) {
-            assertThat(patient.getDateOfRegistrationAtClinic()).isAfter(LocalDate.of(2021, 6, 20));
+            assertThat(patient.getBMI()).isGreaterThan(21);
         }
     }
 

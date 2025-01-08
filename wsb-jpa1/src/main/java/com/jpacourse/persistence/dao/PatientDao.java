@@ -16,7 +16,7 @@ public interface PatientDao extends Dao<PatientEntity, Long> {
         String visitDescription
     );
 
-    List<PatientEntity> findPatientsRegisteredAtClinicAfterDate(LocalDate dateOfRegistrationAtClinic);
+    List<PatientEntity> findPatientsWithBmiGraterThen(double BMI);
     List<PatientEntity> findPatientsByLastName(String lastName);
     List<VisitEntity> findAllVisitsByPatientID(Long patientID);
     List<PatientEntity> findPatientsWithMoreVisitsThan(int numberOfVisits);
