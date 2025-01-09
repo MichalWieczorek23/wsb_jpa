@@ -72,7 +72,7 @@ public class PatientServiceTest
 
     @Transactional
     @Test
-    public void testFindAllVisitsByPatientID() {
+    public void testFindAllVisitsByThePatientsID() {
         // Data was previously prepared in the SQL
         List<VisitBasicsDto> patientVisits = patientService.findAllVisitsByThePatientsId(1L);
 

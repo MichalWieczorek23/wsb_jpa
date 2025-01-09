@@ -3,6 +3,7 @@ package com.jpacourse.service.impl;
 import com.jpacourse.dto.PatientTO;
 import com.jpacourse.dto.VisitBasicsDto;
 import com.jpacourse.mapper.PatientMapper;
+import com.jpacourse.mapper.VisitMapper;
 import com.jpacourse.persistence.dao.PatientDao;
 import com.jpacourse.persistence.entity.MedicalTreatmentEntity;
 import com.jpacourse.persistence.entity.PatientEntity;
@@ -39,8 +40,13 @@ public class PatientServiceImpl implements PatientService
 
     @Override
     public List<VisitBasicsDto> findAllVisitsByThePatientsId(Long id) {
-        PatientTO patientTO = this.findById(1L);
-        return new ArrayList<>(patientTO.getVisitBasicsDtos());
+        List<VisitBasicsDto> visitBasicsDtoList = new ArrayList<>();
+
+        List<VisitEntity> visitEntityList = patientDao.findAllVisitsByPatientID(id);
+        for (VisitEntity vel : visitEntityList) {
+            visitBasicsDtoList.add(VisitMapper.mapToTO(vel));
+        }
+        return visitBasicsDtoList;
     }
 
     @Override
