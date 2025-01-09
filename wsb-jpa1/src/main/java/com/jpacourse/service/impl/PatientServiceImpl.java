@@ -4,6 +4,7 @@ import com.jpacourse.dto.PatientTO;
 import com.jpacourse.dto.VisitBasicsDto;
 import com.jpacourse.mapper.PatientMapper;
 import com.jpacourse.persistence.dao.PatientDao;
+import com.jpacourse.persistence.entity.MedicalTreatmentEntity;
 import com.jpacourse.persistence.entity.PatientEntity;
 import com.jpacourse.persistence.entity.VisitEntity;
 import com.jpacourse.service.PatientService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,9 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService
 {
     private final PatientDao patientDao;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     public PatientServiceImpl(PatientDao patientDao) {
@@ -73,13 +79,20 @@ public class PatientServiceImpl implements PatientService
         return PatientMapper.mapToTO(patientDao.save(patientEntity));
     }
 
+    @Transactional
     @Override
     public void deletePatient(Long patientId) {
-        PatientEntity entity = patientDao.findOne(patientId);
-        if (entity == null){
-            throw new IllegalArgumentException("Patient does not exist in DB, action is not permitted!");
+        PatientEntity patient = patientDao.findOne(patientId);
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient does not exist");
         }
 
-        patientDao.delete(entity);
+        if (patient.getVisitEntities() != null) {
+            for (VisitEntity visit : patient.getVisitEntities()) {
+                visit.setMedicalTreatmentEntities(null);
+            }
+        }
+
+        patientDao.delete(patient);
     }
 }

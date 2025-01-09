@@ -1,5 +1,6 @@
 package com.jpacourse.persistence.dao;
 
+import com.jpacourse.persistence.dao.impl.PatientDaoImpl;
 import com.jpacourse.persistence.entity.AddressEntity;
 import com.jpacourse.persistence.entity.DoctorEntity;
 import com.jpacourse.persistence.entity.PatientEntity;
@@ -8,19 +9,29 @@ import com.jpacourse.persistence.enums.Specialization;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @SpringBootTest
-@Transactional
 public class PatientDaoTest {
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private PatientDao patientDao;
@@ -139,4 +150,32 @@ public class PatientDaoTest {
             assertThat(patient.getBMI()).isLessThan(25.0);
         }
     }
+
+//    @Test
+//    public void testOptimisticLockWithSeparateTransactions() {
+//        // T1: First transaction to update the entity
+//        new TransactionTemplate(transactionManager).execute(status -> {
+//            // Read the entity in T1
+//            PatientEntity patient1 = patientDao.findOne(2L);
+//            patient1.setBMI(27.0);
+//            patientDao.update(patient1);
+//            entityManager.flush(); // Update and persist patient1 in T1
+//            return null; // Commit the transaction
+//        });
+//
+//        // T2: Second transaction to attempt a conflicting update
+//        assertThrows(OptimisticLockException.class, () -> {
+//            new TransactionTemplate(transactionManager).execute(status -> {
+//                // Read the entity in T2
+//                PatientEntity patient2 = patientDao.findOne(2L);
+//                patient2.setBMI(28.0);
+//                patientDao.update(patient2); // Attempt to update with stale version
+//
+//                entityManager.flush(); // Trigger the version check and exception
+//                return null; // Commit will trigger if flush doesn't
+//            });
+//        });
+//    }
+
+
 }

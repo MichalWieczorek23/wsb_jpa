@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table(name = "VISIT")
 public class VisitEntity {
 
+//	@Version
+//	private Integer version;
+
 	// Relacja dwustronna
 	// Doktor jest nullowalny żeby oddać pełną kontrolę pacjentowi do zarządzania swoimi danymi
 	// W ten sposób usunięcie danych lekarza nie wymusza usunięcia medycznych danych pajenta
@@ -20,8 +23,7 @@ public class VisitEntity {
 
 	// Relacja jednostronna ze strony rodzica
 	@OneToMany(
-			fetch = FetchType.LAZY,
-			orphanRemoval = true
+			fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true
 	)
 	@JoinColumn(name = "VISIT_ID")
 	private Collection<MedicalTreatmentEntity> medicalTreatmentEntities;

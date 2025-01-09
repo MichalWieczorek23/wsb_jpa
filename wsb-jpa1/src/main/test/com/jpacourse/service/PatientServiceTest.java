@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,7 +95,9 @@ public class PatientServiceTest
         assertNotNull(patientTO);
 
         PatientEntity patientEntity = patientDao.findOne(1L);
-
+        if (patientEntity == null) {
+            throw new EntityNotFoundException("Patient with ID 1 not found.");
+        }
         List<VisitEntity> visitEntityList = new ArrayList<>(patientEntity.getVisitEntities());
 
         System.out.println(patientService.findById(1L).getId());
