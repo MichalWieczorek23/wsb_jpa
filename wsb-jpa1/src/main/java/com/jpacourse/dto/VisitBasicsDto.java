@@ -13,7 +13,7 @@ public class VisitBasicsDto implements Serializable
     private LocalDateTime time;
     private String doctorFirstName;
     private String doctorLastName;
-    private List<MedicalTreatmentEntity> medicalTreatmentEntities;
+    private List<String> medicalTreatments;
 
     public LocalDateTime getTime() {
         return time;
@@ -47,11 +47,11 @@ public class VisitBasicsDto implements Serializable
         this.doctorLastName = doctorLastName;
     }
 
-    public List<MedicalTreatmentEntity> getMedicalTreatmentEntities() {
-        return medicalTreatmentEntities;
+    public List<String> getMedicalTreatmentEntities() {
+        return medicalTreatments;
     }
 
-    public void setMedicalTreatmentEntities(List<MedicalTreatmentEntity> medicalTreatmentEntities) {
-        this.medicalTreatmentEntities = medicalTreatmentEntities;
+    public void setMedicalTreatmentEntities(List<String> medicalTreatments) {
+        this.medicalTreatments = medicalTreatments;
     }
 }

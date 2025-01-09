@@ -4,6 +4,7 @@ import com.jpacourse.dto.VisitBasicsDto;
 import com.jpacourse.persistence.entity.VisitEntity;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public final class VisitMapper
 {
@@ -18,7 +19,12 @@ public final class VisitMapper
         visitBasicsDto.setTime(visitEntity.getTime());
         visitBasicsDto.setDoctorFirstName(visitEntity.getDoctorEntity().getFirstName());
         visitBasicsDto.setDoctorLastName(visitEntity.getDoctorEntity().getLastName());
-        visitBasicsDto.setMedicalTreatmentEntities(new ArrayList<>(visitEntity.getMedicalTreatmentEntities()));
+        visitBasicsDto.setMedicalTreatmentEntities(
+                visitEntity.getMedicalTreatmentEntities()
+                        .stream()
+                        .map(x -> x.getType().toString())
+                        .collect(Collectors.toList())
+        );
 
         return visitBasicsDto;
     }

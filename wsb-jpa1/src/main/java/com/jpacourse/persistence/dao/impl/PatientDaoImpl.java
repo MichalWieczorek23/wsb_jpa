@@ -49,7 +49,7 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
 
         patient.setVisitEntities(visitEntities);
 
-        entityManager.merge(patient);
+        update(patient);
     }
 
     @Override

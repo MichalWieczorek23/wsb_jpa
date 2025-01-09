@@ -61,10 +61,10 @@ public class PatientServiceTest
         assertEquals("Frank", patientTO.getVisitBasicsDtos().get(0).getDoctorFirstName());
         assertEquals("Sinatra", patientTO.getVisitBasicsDtos().get(0).getDoctorLastName());
 
-        List<MedicalTreatmentEntity> tempMedList = patientTO.getVisitBasicsDtos().get(0).getMedicalTreatmentEntities();
+        List<String> tempMedList = patientTO.getVisitBasicsDtos().get(0).getMedicalTreatmentEntities();
 
-        for (MedicalTreatmentEntity el : tempMedList) {
-            assertNotNull(el.getType());
+        for (String el : tempMedList) {
+            assertNotNull(el);
         }
 
         assertEquals(21.0, patientTO.getBMI(), 0.1);
