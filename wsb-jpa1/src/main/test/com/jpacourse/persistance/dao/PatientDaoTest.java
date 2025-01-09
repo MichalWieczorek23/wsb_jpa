@@ -64,8 +64,6 @@ public class PatientDaoTest {
         addressEntity.setCity("City1");
         addressEntity.setPostalCode("66-666");
 
-        addressDao.save(addressEntity);
-
         PatientEntity patient = new PatientEntity();
         patient.setFirstName("Jan");
         patient.setLastName("Kowalski");
@@ -150,32 +148,4 @@ public class PatientDaoTest {
             assertThat(patient.getBMI()).isLessThan(25.0);
         }
     }
-
-//    @Test
-//    public void testOptimisticLockWithSeparateTransactions() {
-//        // T1: First transaction to update the entity
-//        new TransactionTemplate(transactionManager).execute(status -> {
-//            // Read the entity in T1
-//            PatientEntity patient1 = patientDao.findOne(2L);
-//            patient1.setBMI(27.0);
-//            patientDao.update(patient1);
-//            entityManager.flush(); // Update and persist patient1 in T1
-//            return null; // Commit the transaction
-//        });
-//
-//        // T2: Second transaction to attempt a conflicting update
-//        assertThrows(OptimisticLockException.class, () -> {
-//            new TransactionTemplate(transactionManager).execute(status -> {
-//                // Read the entity in T2
-//                PatientEntity patient2 = patientDao.findOne(2L);
-//                patient2.setBMI(28.0);
-//                patientDao.update(patient2); // Attempt to update with stale version
-//
-//                entityManager.flush(); // Trigger the version check and exception
-//                return null; // Commit will trigger if flush doesn't
-//            });
-//        });
-//    }
-
-
 }
