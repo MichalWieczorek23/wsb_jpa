@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-// ! Czy klasa musi byc Serializable
+
 public class VisitBasicsDto implements Serializable
 {
     private Long id;

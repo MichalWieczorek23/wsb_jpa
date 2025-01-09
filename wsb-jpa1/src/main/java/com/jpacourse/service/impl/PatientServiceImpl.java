@@ -24,9 +24,6 @@ public class PatientServiceImpl implements PatientService
 {
     private final PatientDao patientDao;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Autowired
     public PatientServiceImpl(PatientDao patientDao) {
         this.patientDao = patientDao;
